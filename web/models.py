@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class Token (models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    token = models.CharField(max_length=48)
+    def __str__(self):
+        return "{}-token".format(self.user)
+
 class Expense(models.Model):
     text = models.CharField(max_length=255)
     date = models.DateTimeField() 
@@ -15,8 +21,9 @@ class Expense(models.Model):
 
 class Income(models.Model):
     text = models.CharField(max_length=255)
-    date = models.DateField()
+    date = models.DateTimeField() 
     amount = models.BigIntegerField()
-    user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,)
-    def __srt__(self):
-        return "{}-{}".format(self.date,self.amount)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,)  # har user be yek Expense vasl mishe
+    def __str__(self):
+        return "{}-{}".format(self.date, self.amount) 
+    
